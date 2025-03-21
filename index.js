@@ -242,11 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
           border-radius: 10px;
           overflow: hidden;
           box-shadow: var(--shadow);
-          flex: 0 0 100%;
           margin: 0 10px 20px;
-          min-width: 250px;
-          flex: 0 0 calc(100% - 20px);
-          margin: 0 10px;
+          display: block;
         }
         
         .service-img {
@@ -687,8 +684,7 @@ document.addEventListener("DOMContentLoaded", () => {
           border-radius: 10px;
           overflow: hidden;
           box-shadow: var(--shadow);
-          flex: 0 0 calc(25% - 20px);
-          margin: 0 10px;
+          margin: 0 10px 20px;
           display: block;
         }
         
@@ -765,56 +761,70 @@ document.addEventListener("DOMContentLoaded", () => {
         /* Mobile-specific styles for services section */
         @media (max-width: 767px) {
           #services {
-            padding: 30px 0;
+            padding: 30px 15px;
           }
           
-          .services-header h2 {
-            font-size: 1.8rem;
+          .services-container {
+            padding: 0;
+            margin: 0;
+            width: 100%;
+          }
+          
+          .slider-container {
+            overflow: visible;
+            margin: 0;
+            padding: 0;
+            width: 100%;
           }
           
           .services-slider {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            transform: none !important;
+            width: 100%;
           }
           
           .service-card {
-            flex: 0 0 100%;
-            max-width: 100%;
-            margin: 0 auto 20px;
-            width: calc(100% - 30px) !important;
+            flex: 0 0 100% !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 0 20px 0 !important;
           }
           
           .service-card img {
-            height: 180px;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16/9;
+            object-fit: cover;
           }
           
           .service-content {
             padding: 15px;
           }
           
-          .service-title {
+          .service-content h3 {
             font-size: 1.2rem;
-          }
-          
-          .service-description {
-            font-size: 0.85rem;
+            margin-bottom: 8px;
           }
           
           .slider-nav, .slider-dots {
-            display: none;
+            display: none !important;
           }
         }
         
         /* Tablet styles */
         @media (min-width: 768px) and (max-width: 991px) {
           .service-card {
-            flex: 0 0 calc(50% - 20px);
+            flex: 0 0 calc(50% - 20px) !important;
+            max-width: calc(50% - 20px) !important;
           }
         }
         
         /* Small desktop styles */
         @media (min-width: 992px) and (max-width: 1199px) {
           .service-card {
-            flex: 0 0 calc(33.333% - 20px);
+            flex: 0 0 calc(33.333% - 20px) !important;
+            max-width: calc(33.333% - 20px) !important;
           }
         }
       </style>
@@ -1230,45 +1240,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const cards = document.querySelectorAll(".service-card");
       const sliderContainer = document.querySelector(".slider-container");
-      const servicesContainer = document.querySelector(".services-container");
+      const servicesSlider = document.querySelector(".services-slider");
 
-      // For mobile: stack cards vertically
+      // For mobile: stack cards vertically without horizontal scrolling
       if (window.innerWidth < 768) {
-        // Convert to vertical layout
-        if (servicesSlider) servicesSlider.style.transform = "none";
-        if (servicesSlider) servicesSlider.style.display = "block";
+        // Disable slider behavior completely
+        if (servicesSlider) {
+          servicesSlider.style.transform = "none";
+          servicesSlider.style.display = "flex";
+          servicesSlider.style.flexDirection = "column";
+          servicesSlider.style.width = "100%";
+        }
 
+        if (sliderContainer) {
+          sliderContainer.style.overflow = "visible";
+          sliderContainer.style.margin = "0";
+          sliderContainer.style.padding = "0";
+        }
+
+        // Make cards full-width
         cards.forEach((card) => {
+          card.style.flex = "0 0 100%";
+          card.style.maxWidth = "100%";
           card.style.display = "block";
-          card.style.width = "calc(100% - 20px)";
-          card.style.margin = "0 auto 20px";
+          card.style.width = "100%";
+          card.style.margin = "0 0 20px 0";
+          card.style.minWidth = "unset";
         });
 
-        // Hide slider controls on mobile
-        const sliderControls = document.querySelectorAll(
+        // Hide slider navigation completely
+        const sliderNavs = document.querySelectorAll(
           ".slider-nav, .slider-dots"
         );
-        sliderControls.forEach((control) => {
-          if (control) control.style.display = "none";
+        sliderNavs.forEach((nav) => {
+          if (nav) nav.style.display = "none";
         });
       } else {
-        // Reset for desktop
-        if (servicesSlider) servicesSlider.style.display = "flex";
+        // Reset for larger screens
+        if (servicesSlider) {
+          servicesSlider.style.display = "flex";
+          servicesSlider.style.flexDirection = "row";
+        }
 
-        cards.forEach((card, index) => {
+        if (sliderContainer) {
+          sliderContainer.style.overflow = "hidden";
+        }
+
+        // Set card widths proportionally
+        cards.forEach((card) => {
+          card.style.flex = `0 0 calc(${100 / slidesPerView}% - 20px)`;
+          card.style.maxWidth = `calc(${100 / slidesPerView}% - 20px)`;
+          card.style.margin = "0 10px";
           card.style.display = "block";
-          card.style.width = `calc(${100 / slidesPerView}% - 20px)`;
         });
 
-        // Show slider controls on desktop
-        const sliderControls = document.querySelectorAll(
-          ".slider-nav, .slider-dots"
-        );
-        sliderControls.forEach((control) => {
-          if (control) control.style.display = "flex";
+        // Show navigation on larger screens
+        const sliderNavs = document.querySelectorAll(".slider-nav");
+        sliderNavs.forEach((nav) => {
+          if (nav) nav.style.display = "flex";
         });
 
-        // Update existing slider if present
+        const sliderDots = document.querySelector(".slider-dots");
+        if (sliderDots) sliderDots.style.display = "flex";
+
+        // Update slider position if needed
         if (typeof calculateSlidesPerView === "function") {
           calculateSlidesPerView();
         }
