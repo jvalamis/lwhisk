@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
           line-height: 1.6;
           background-color: var(--secondary);
           position: relative;
+          -webkit-text-size-adjust: 100%;
         }
         
         header {
@@ -144,6 +145,8 @@ document.addEventListener("DOMContentLoaded", () => {
           font-weight: 500;
           border: 2px solid var(--accent);
           cursor: pointer;
+          margin-bottom: 0.5rem;
+          min-width: 150px;
         }
         
         .btn:hover {
@@ -154,11 +157,11 @@ document.addEventListener("DOMContentLoaded", () => {
         .btn-outline {
           background-color: transparent;
           color: var(--text-light);
-          margin-left: 1rem;
+          margin-left: 0.5rem;
         }
         
         .section {
-          padding: 5rem 2rem;
+          padding: 5rem 1rem;
           position: relative;
         }
         
@@ -192,8 +195,9 @@ document.addEventListener("DOMContentLoaded", () => {
         .about-content {
           display: flex;
           align-items: center;
-          gap: 3rem;
+          gap: 2rem;
           margin-top: 3rem;
+          flex-direction: column;
         }
         
         .about-text {
@@ -205,6 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
           border-radius: 10px;
           overflow: hidden;
           box-shadow: var(--shadow);
+          max-width: 100%;
         }
         
         .about-image img {
@@ -219,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         .services-container {
           position: relative;
-          padding: 0 60px;
+          padding: 0 40px;
           margin-top: 3rem;
         }
         
@@ -237,20 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
           border-radius: 10px;
           overflow: hidden;
           box-shadow: var(--shadow);
-          flex: 0 0 calc(100% / 2 - 20px);
+          flex: 0 0 calc(100% - 20px);
           margin: 0 10px;
-        }
-        
-        @media (min-width: 992px) {
-          .service-card {
-            flex: 0 0 calc(100% / 3 - 20px);
-          }
-        }
-        
-        @media (min-width: 1200px) {
-          .service-card {
-            flex: 0 0 calc(100% / 4 - 20px);
-          }
         }
         
         .service-img {
@@ -278,8 +271,8 @@ document.addEventListener("DOMContentLoaded", () => {
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          width: 45px;
-          height: 45px;
+          width: 40px;
+          height: 40px;
           background-color: var(--primary);
           border-radius: 50%;
           display: flex;
@@ -293,11 +286,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         .slider-prev {
-          left: 10px;
+          left: 0;
         }
         
         .slider-next {
-          right: 10px;
+          right: 0;
         }
         
         .slider-dots {
@@ -323,7 +316,7 @@ document.addEventListener("DOMContentLoaded", () => {
           background-color: var(--primary);
           color: var(--text-light);
           text-align: center;
-          padding: 4rem 2rem;
+          padding: 4rem 1rem;
         }
         
         .announcement h2 {
@@ -344,8 +337,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         .contact-content {
           display: flex;
-          gap: 3rem;
+          gap: 2rem;
           margin-top: 3rem;
+          flex-direction: column;
         }
         
         .contact-info {
@@ -376,10 +370,11 @@ document.addEventListener("DOMContentLoaded", () => {
         
         .map {
           flex: 1;
-          height: 400px;
+          height: 300px;
           border-radius: 10px;
           overflow: hidden;
           box-shadow: var(--shadow);
+          width: 100%;
         }
         
         .map iframe {
@@ -390,7 +385,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         .newsletter {
           background-color: var(--accent);
-          padding: 3rem 2rem;
+          padding: 3rem 1rem;
           text-align: center;
         }
         
@@ -410,29 +405,34 @@ document.addEventListener("DOMContentLoaded", () => {
           max-width: 500px;
           margin: 0 auto;
           display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
         }
         
         .newsletter-form input {
           flex: 1;
           padding: 0.8rem;
           border: none;
-          border-radius: 50px 0 0 50px;
+          border-radius: 50px;
           font-family: var(--font-body);
+          width: 100%;
         }
         
         .newsletter-form button {
           background-color: var(--primary);
           color: var(--text-light);
           border: none;
-          padding: 0 1.5rem;
-          border-radius: 0 50px 50px 0;
+          padding: 0.8rem 1.5rem;
+          border-radius: 50px;
           cursor: pointer;
+          width: 100%;
+          font-family: var(--font-body);
         }
         
         footer {
           background-color: var(--primary);
           color: var(--text-light);
-          padding: 3rem 2rem 1rem;
+          padding: 3rem 1rem 1rem;
         }
         
         .footer-container {
@@ -442,7 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         .footer-content {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          grid-template-columns: 1fr;
           gap: 2rem;
           margin-bottom: 2rem;
         }
@@ -508,17 +508,74 @@ document.addEventListener("DOMContentLoaded", () => {
           color: rgba(255, 255, 255, 0.7);
         }
         
-        @media (max-width: 992px) {
+        /* Larger devices (tablets and above) */
+        @media (min-width: 768px) {
+          .section {
+            padding: 5rem 2rem;
+          }
+          
           .about-content {
-            flex-direction: column;
+            flex-direction: row;
           }
           
           .contact-content {
-            flex-direction: column;
+            flex-direction: row;
+          }
+          
+          .map {
+            height: 400px;
+          }
+          
+          .newsletter-form {
+            flex-direction: row;
+          }
+          
+          .newsletter-form input {
+            border-radius: 50px 0 0 50px;
+            width: auto;
+          }
+          
+          .newsletter-form button {
+            border-radius: 0 50px 50px 0;
+            width: auto;
+          }
+          
+          .footer-content {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          
+          .btn {
+            margin-bottom: 0;
+          }
+          
+          .service-card {
+            flex: 0 0 calc(100% / 2 - 20px);
           }
         }
         
-        @media (max-width: 768px) {
+        /* Desktop */
+        @media (min-width: 992px) {
+          .section-heading {
+            font-size: 2.5rem;
+          }
+          
+          .footer-content {
+            grid-template-columns: repeat(4, 1fr);
+          }
+          
+          .service-card {
+            flex: 0 0 calc(100% / 3 - 20px);
+          }
+        }
+        
+        @media (min-width: 1200px) {
+          .service-card {
+            flex: 0 0 calc(100% / 4 - 20px);
+          }
+        }
+        
+        /* Mobile styles */
+        @media (max-width: 767px) {
           .header-container {
             position: relative;
           }
@@ -552,11 +609,43 @@ document.addEventListener("DOMContentLoaded", () => {
           }
           
           .hero h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
+          }
+          
+          .hero h2 {
+            font-size: 1.5rem;
+          }
+          
+          .hero p {
+            font-size: 1rem;
           }
           
           .section-heading {
-            font-size: 2rem;
+            font-size: 1.8rem;
+          }
+          
+          .btn {
+            display: block;
+            margin: 0 auto 1rem auto;
+            text-align: center;
+          }
+          
+          .btn-outline {
+            margin-left: auto;
+          }
+          
+          .announcement h2 {
+            font-size: 1.8rem;
+          }
+          
+          .services-container {
+            padding: 0 30px;
+          }
+          
+          .slider-nav {
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
           }
         }
       </style>
@@ -565,15 +654,16 @@ document.addEventListener("DOMContentLoaded", () => {
       <header>
         <div class="header-container">
           <a href="#" class="logo">
+            <img src="lwhsik.png" alt="Ladle and the Whisk" width="40" height="40" style="margin-right: 10px;">
             Ladle and the Whisk
           </a>
           <button class="mobile-menu">☰</button>
           <nav>
             <ul>
-              <li><a href="#home">Home</a></li>
               <li><a href="#about">About Us</a></li>
               <li><a href="#services">Our Offerings</a></li>
-              <li><a href="#contact">Visit Us</a></li>
+              <li><a href="#contact">Location</a></li>
+              <li><a href="#newsletter">Join Us</a></li>
             </ul>
           </nav>
         </div>
@@ -934,4 +1024,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Start immediately
   preloadImages();
+
+  // Create a new script element after all the HTML content generation
+  document.addEventListener("DOMContentLoaded", function () {
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector(".mobile-menu");
+    const nav = document.querySelector("nav");
+
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener("click", function () {
+        nav.classList.toggle("active");
+      });
+    }
+
+    // Close the mobile menu when clicking a navigation link
+    const navLinks = document.querySelectorAll("nav a");
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", function () {
+        if (window.innerWidth < 768) {
+          nav.classList.remove("active");
+        }
+      });
+    });
+
+    // Adjust slider for different screen sizes
+    function updateSliderView() {
+      const slidesPerView =
+        window.innerWidth < 768
+          ? 1
+          : window.innerWidth < 992
+          ? 2
+          : window.innerWidth < 1200
+          ? 3
+          : 4;
+
+      // Update slider cards visibility
+      const cards = document.querySelectorAll(".service-card");
+      cards.forEach((card, index) => {
+        card.style.display = index < slidesPerView ? "block" : "none";
+      });
+    }
+
+    // Run on load and resize
+    updateSliderView();
+    window.addEventListener("resize", updateSliderView);
+
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute("href");
+        if (targetId === "#") return;
+
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: "auto",
+          });
+        }
+      });
+    });
+  });
 });
