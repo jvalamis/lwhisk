@@ -242,6 +242,9 @@ document.addEventListener("DOMContentLoaded", () => {
           border-radius: 10px;
           overflow: hidden;
           box-shadow: var(--shadow);
+          flex: 0 0 100%;
+          margin: 0 10px 20px;
+          min-width: 250px;
           flex: 0 0 calc(100% - 20px);
           margin: 0 10px;
         }
@@ -646,6 +649,172 @@ document.addEventListener("DOMContentLoaded", () => {
             width: 30px;
             height: 30px;
             font-size: 1rem;
+          }
+        }
+        
+        /* Additional CSS for the Services/Offerings section */
+        #services {
+          padding: 50px 0;
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .services-container {
+          position: relative;
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 15px;
+        }
+        
+        .services-header {
+          text-align: center;
+          margin-bottom: 30px;
+        }
+        
+        .slider-container {
+          position: relative;
+          overflow: hidden;
+          margin: 0 -10px;
+        }
+        
+        .services-slider {
+          display: flex;
+          transition: transform 0.3s ease;
+        }
+        
+        .service-card {
+          background-color: white;
+          border-radius: 10px;
+          overflow: hidden;
+          box-shadow: var(--shadow);
+          flex: 0 0 calc(25% - 20px);
+          margin: 0 10px;
+          display: block;
+        }
+        
+        .service-card img {
+          width: 100%;
+          height: 200px;
+          object-fit: cover;
+        }
+        
+        .service-content {
+          padding: 20px;
+        }
+        
+        .service-title {
+          font-family: 'Playfair Display', serif;
+          margin-bottom: 10px;
+          font-size: 1.3rem;
+        }
+        
+        .service-description {
+          font-size: 0.9rem;
+          margin-bottom: 15px;
+          color: #555;
+        }
+        
+        .service-price {
+          font-weight: bold;
+          color: var(--primary-color);
+          margin-bottom: 10px;
+        }
+        
+        .slider-nav {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+        }
+        
+        .slider-prev, .slider-next {
+          background-color: var(--primary-color);
+          color: white;
+          border: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin: 0 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+        
+        .slider-prev:hover, .slider-next:hover {
+          background-color: var(--primary-dark);
+        }
+        
+        .slider-dots {
+          display: flex;
+          justify-content: center;
+          margin-top: 15px;
+        }
+        
+        .slider-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: #ddd;
+          margin: 0 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+        
+        .slider-dot.active {
+          background-color: var(--primary-color);
+        }
+        
+        /* Mobile-specific styles for services section */
+        @media (max-width: 767px) {
+          #services {
+            padding: 30px 0;
+          }
+          
+          .services-header h2 {
+            font-size: 1.8rem;
+          }
+          
+          .services-slider {
+            display: block;
+          }
+          
+          .service-card {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin: 0 auto 20px;
+            width: calc(100% - 30px) !important;
+          }
+          
+          .service-card img {
+            height: 180px;
+          }
+          
+          .service-content {
+            padding: 15px;
+          }
+          
+          .service-title {
+            font-size: 1.2rem;
+          }
+          
+          .service-description {
+            font-size: 0.85rem;
+          }
+          
+          .slider-nav, .slider-dots {
+            display: none;
+          }
+        }
+        
+        /* Tablet styles */
+        @media (min-width: 768px) and (max-width: 991px) {
+          .service-card {
+            flex: 0 0 calc(50% - 20px);
+          }
+        }
+        
+        /* Small desktop styles */
+        @media (min-width: 992px) and (max-width: 1199px) {
+          .service-card {
+            flex: 0 0 calc(33.333% - 20px);
           }
         }
       </style>
@@ -1059,11 +1228,51 @@ document.addEventListener("DOMContentLoaded", () => {
           ? 3
           : 4;
 
-      // Update slider cards visibility
       const cards = document.querySelectorAll(".service-card");
-      cards.forEach((card, index) => {
-        card.style.display = index < slidesPerView ? "block" : "none";
-      });
+      const sliderContainer = document.querySelector(".slider-container");
+      const servicesContainer = document.querySelector(".services-container");
+
+      // For mobile: stack cards vertically
+      if (window.innerWidth < 768) {
+        // Convert to vertical layout
+        if (servicesSlider) servicesSlider.style.transform = "none";
+        if (servicesSlider) servicesSlider.style.display = "block";
+
+        cards.forEach((card) => {
+          card.style.display = "block";
+          card.style.width = "calc(100% - 20px)";
+          card.style.margin = "0 auto 20px";
+        });
+
+        // Hide slider controls on mobile
+        const sliderControls = document.querySelectorAll(
+          ".slider-nav, .slider-dots"
+        );
+        sliderControls.forEach((control) => {
+          if (control) control.style.display = "none";
+        });
+      } else {
+        // Reset for desktop
+        if (servicesSlider) servicesSlider.style.display = "flex";
+
+        cards.forEach((card, index) => {
+          card.style.display = "block";
+          card.style.width = `calc(${100 / slidesPerView}% - 20px)`;
+        });
+
+        // Show slider controls on desktop
+        const sliderControls = document.querySelectorAll(
+          ".slider-nav, .slider-dots"
+        );
+        sliderControls.forEach((control) => {
+          if (control) control.style.display = "flex";
+        });
+
+        // Update existing slider if present
+        if (typeof calculateSlidesPerView === "function") {
+          calculateSlidesPerView();
+        }
+      }
     }
 
     // Run on load and resize
