@@ -833,7 +833,6 @@ document.addEventListener("DOMContentLoaded", () => {
       <header>
         <div class="header-container">
           <a href="#" class="logo">
-            <img src="lwhsik.png" alt="Ladle and the Whisk" width="40" height="40" style="margin-right: 10px;">
             Ladle and the Whisk
           </a>
           <button class="mobile-menu">☰</button>
